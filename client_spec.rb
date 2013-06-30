@@ -6,10 +6,14 @@ class ClientSpec
       @name = 'Mike'
       @an_age = 24
       @gender = 'male'
-      @animal_list = ['Misty', 'Buck']
+      @animals = ['Misty', 'Buck']
       @kids = ['Kyle','Liz']
-      @client = Client.new(@a_name, @an_age, @a_gender, @animal_list, @kids)
+      @client = Client.new(@a_name, @an_age, @a_gender, @animals, @kids)
     end
+
+    # its(:name) { should == 'Mike' }
+
+    # it { subject.name.should eq @a_name }
 
     it 'has a name' do
       @client.name.should eq @a_name
@@ -28,10 +32,21 @@ class ClientSpec
     end
 
     it 'has a list of animals' do 
-      @client.list_animals.should eq @animal_list
+      @client.animals.should eq @animals
     end
 
-    it 'gives up an animal for adoption'
+    it 'can remove an animal' do
+      numAnimals = @animals.length
+      @client.remove_animal(0)
+      @client.animals.length.should eq (numAnimals -1)
+    end
+ 
+    it 'can add an animal' do 
+      numAnimals = @animals.length
+      @client.add_animal(0)
+      @client.animals.length.should eq (numAnimals +1)
+    end
+
     it 'can list the shelters clients'
 
   end

@@ -15,9 +15,6 @@ class ShelterSpec
       @client1 = Client.new('Mike', 24, 'male', ['Buck', 'Misty'], ['liz', 'kyle'])
       @clients = [@client1]
       
-      @new_animal = Animal.new('Rocky', @a_breed, @an_age, @a_gender, @favorite_toys)
-      @new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
-
       @shelter = Shelter.new([@animal1], @clients)
     end
 
@@ -29,18 +26,21 @@ class ShelterSpec
       @shelter.animals.should eq [@animal1]
     end
 
-    it 'accepts animal for adoption' do
-      @shelter.accept_animal(@new_animal)
-      @shelter.animals.should eq [@animal1, @new_animal]
-    end
+    # MOVED THIS INTO ITS OWN DESCRIBE WITH DIFFERENT CONTEXTS
+    # it 'accepts an animal' do
+    #   new_animal = Animal.new('Rocky', @a_breed, @an_age, @a_gender, @favorite_toys)
+    #   @shelter.accept_animal(new_animal)
+    #   @shelter.animals.should eq [@animal1, new_animal]
+    # end
 
     it 'has a list of clients' do
       @shelter.clients.should eq @clients
     end
 
     it 'accepts new clients' do 
-      @shelter.accept_client(@new_client)
-      @shelter.clients.should eq [@client1, @new_client]
+      new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
+      @shelter.accept_client(new_client)
+      @shelter.clients.should eq [@client1, new_client]
     end
 
   end
@@ -48,14 +48,23 @@ class ShelterSpec
   describe 'shelter#accept_animal' do 
     before do 
       @client1 = Client.new('Mike', 24, 'male', ['Buck', 'Misty'], ['liz', 'kyle'])            
-      @new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
       @clients = [@client1]
 
-      @shelter = Shelter.new([@animal1], @clients)
+      @animal1 = Animal.new('animal name', 'french poodle', 3, 'male', ['bone', 'tennis ball'])
+      @animals = [@animal1]
+
+      @shelter = Shelter.new(@animals, @clients)
     end
-    
+
+    it 'accepts an animal' do
+      new_animal = Animal.new('Rocky', 'Pitbull', 6, 'male', ['limbs'])
+      @shelter.accept_animal(new_animal)
+      @shelter.animals.should eq [@animal1, new_animal]
+    end
+
     context 'for new client' do
-      it 'increment client list by 1' do
+      it 'increments client list by 1' do
+        @new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
         @shelter.accept_client(@new_client)
         @shelter.clients.should eq [@client1, @new_client]
       end
@@ -66,19 +75,6 @@ class ShelterSpec
         @shelter.clients.should eq [@client1]
       end
     end
-
-    # context 'animal was a stray' do
-    #   it 'does not affect client list' do
-    #     @shelter.clients.should eq [@client1]
-    #   end
-    # end
-
   end
-    
+
 end
-
-
-
-
-
-
