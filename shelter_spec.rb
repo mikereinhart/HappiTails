@@ -49,26 +49,49 @@ class ShelterSpec
       @shelter.remove_animal(0)
       @shelter.animals.length.should eq (numAnimals - 1)
     end
+  end
 
+  describe 'shelter#remove_animal' do
+    before do
+      @client1 = Client.new('Mike', 24, 'male', ['Buck', 'Misty'], ['liz', 'kyle'])            
+      @clients = [@client1]
+      @animal1 = Animal.new('animal name', 'french poodle', 3, 'male', ['bone', 'tennis ball'])
+      @animals = [@animal1]
+      @shelter = Shelter.new(@animals, @clients)
+    end
+    it 'gives up animals for adoption' do
+      numAnimals = @animals.length
+      @shelter.remove_animal(0)
+      @shelter.animals.length.should eq (numAnimals - 1)
+    end
+    context 'to a new client' do
+      it 'increments client list by 1' do 
+        new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
+        @shelter.accept_client(new_client)
+        @shelter.clients.should eq [@client1, new_client]
+        @shelter.clients.length.should eq 2
+      end
+    end
+    context 'for existing client' do
+      it 'does not change the size of client list' do
+        @shelter.clients.should eq [@client1]
+      end
+    end
   end
 
   describe 'shelter#accept_animal' do 
     before do 
       @client1 = Client.new('Mike', 24, 'male', ['Buck', 'Misty'], ['liz', 'kyle'])            
       @clients = [@client1]
-
       @animal1 = Animal.new('animal name', 'french poodle', 3, 'male', ['bone', 'tennis ball'])
       @animals = [@animal1]
-
       @shelter = Shelter.new(@animals, @clients)
     end
-
     it 'accepts an animal' do
       new_animal = Animal.new('Rocky', 'Pitbull', 6, 'male', ['limbs'])
       @shelter.accept_animal(new_animal)
       @shelter.animals.should eq [@animal1, new_animal]
     end
-
     context 'for new client' do
       it 'increments client list by 1' do
         @new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
@@ -77,12 +100,10 @@ class ShelterSpec
         @shelter.clients.length.should eq 2
       end
     end
-
     context 'for existing client' do
       it 'does not change the size of client list' do
         @shelter.clients.should eq [@client1]
       end
     end
   end
-
 end
