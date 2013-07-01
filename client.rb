@@ -1,10 +1,10 @@
 class Client
 
-  def initialize(a_name, an_age, a_gender, animals, kids)
+  def initialize(a_name, an_age, a_gender, pets, kids)
     @name = a_name
     @age = an_age
     @gender = a_gender
-    @animals = animals
+    @pets = pets
     @kids = kids
   end
 
@@ -20,20 +20,20 @@ class Client
     @gender
   end
 
-  def animals
-    @animals
+  def pets
+    @pets
   end
 
   def kids
     @kids
   end
 
-  def remove_animal(index)
-    @animals.delete_at(index)
+  def remove_pet(index)
+    @pets.delete_at(index)
   end
 
-  def add_animal(animal)
-    @animals << animal
+  def add_pet(animal)
+    @pets << animal
   end
 
 

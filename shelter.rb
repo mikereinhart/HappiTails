@@ -25,13 +25,11 @@ class Shelter
     # that animal has to be removed from the client 
   end
 
+  def remove_animal(index)
+    @animals.delete_at(index)
+  end
+
   def accept_client(client)
     @clients << client
-    # 
   end
 end
-
-# * A client will want to come in and give up 
-# their animal for adoption
-
-# * A client will want to list the clients

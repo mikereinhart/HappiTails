@@ -1,4 +1,16 @@
+require_relative 'shelter'
+require_relative 'client'
+require_relative 'animal'
+
 class Main
+
+  def add_client(client)
+    @shelter.clients << client
+  end
+
+end
+
+
 
 # BEL
 # individual rspec pages only describe 
@@ -10,14 +22,3 @@ class Main
 # main.rb has all the functionalities that do 
 # the interactions between classes.
 
-# Note class Main above
-
-def display_menu_items
-end
-
-def adopt_animal
-
-
-
-
-end

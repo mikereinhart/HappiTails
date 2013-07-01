@@ -11,10 +11,11 @@ class ShelterSpec
       @a_gender = 'male'
       @favorite_toys = ['bone', 'tennis ball']
       @animal1 = Animal.new(@a_name, @a_breed, @an_age, @a_gender, @favorite_toys)
+      @animals = [@animal1]
 
       @client1 = Client.new('Mike', 24, 'male', ['Buck', 'Misty'], ['liz', 'kyle'])
       @clients = [@client1]
-      
+
       @shelter = Shelter.new([@animal1], @clients)
     end
 
@@ -43,6 +44,12 @@ class ShelterSpec
       @shelter.clients.should eq [@client1, new_client]
     end
 
+    it 'gives up animals for adoption' do
+      numAnimals = @animals.length
+      @shelter.remove_animal(0)
+      @shelter.animals.length.should eq (numAnimals - 1)
+    end
+
   end
 
   describe 'shelter#accept_animal' do 
@@ -67,6 +74,7 @@ class ShelterSpec
         @new_client = Client.new('Rob', 34, 'male', ['Gray One', 'Black One'], ['Ryan', 'Molly'])
         @shelter.accept_client(@new_client)
         @shelter.clients.should eq [@client1, @new_client]
+        @shelter.clients.length.should eq 2
       end
     end
 

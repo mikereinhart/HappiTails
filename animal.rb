@@ -6,7 +6,6 @@ class Animal
     @age = an_age
     @gender = a_gender
     @favorite_toys = favorite_toys
-
   end
 
   def name
